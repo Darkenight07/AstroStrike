@@ -2,16 +2,18 @@ package dev.darkenight07.Avion;
 
 import java.awt.event.KeyEvent;
 
-public class KeyBoardListener implements java.awt.event.KeyListener{
-    public boolean arriba;
-    public boolean abajo;
-    public boolean izquierda;
-    public boolean derecha;
+public class KeyBoardListener implements java.awt.event.KeyListener {
+    private boolean arriba;
+    private boolean abajo;
+    private boolean izquierda;
+    private boolean derecha;
+    private boolean disparar;
 
-    public final int ARRIBA = 38;
-    public final int ABAJO = 40;
-    public final int IZQUIERDA = 37;
-    public final int DERECHA = 39;
+    private final int ARRIBA = 38;
+    private final int ABAJO = 40;
+    private final int IZQUIERDA = 37;
+    private final int DERECHA = 39;
+    private final int ESPACIO = 32;
 
 
     public KeyBoardListener() {
@@ -19,6 +21,7 @@ public class KeyBoardListener implements java.awt.event.KeyListener{
         abajo = false;
         izquierda = false;
         derecha = false;
+
     }
 
     public boolean estaSubiendo() {
@@ -52,6 +55,14 @@ public class KeyBoardListener implements java.awt.event.KeyListener{
         }
     }
 
+    public boolean estaDisparando() {
+        if (disparar) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -73,11 +84,30 @@ public class KeyBoardListener implements java.awt.event.KeyListener{
             case DERECHA:
                 derecha = true;
                 break;
+            case ESPACIO:
+                disparar = true;
+                break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        switch (e.getKeyCode()) {
+            case ARRIBA:
+                arriba = false;
+                break;
+            case ABAJO:
+                abajo = false;
+                break;
+            case IZQUIERDA:
+                izquierda = false;
+                break;
+            case DERECHA:
+                derecha = false;
+                break;
+            case ESPACIO:
+                disparar = false;
+                break;
+        }
     }
 }
