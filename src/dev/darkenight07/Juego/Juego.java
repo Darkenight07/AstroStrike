@@ -14,6 +14,8 @@ public class Juego extends JPanel {
 
     public Juego(JFrame frame) {
         avion = new Avion(340, 400,2);
+        setFocusable(true);
+        addKeyListener(avion.getKeyBoardListener());
 
         try {
             usuarioAvion = ImageIO.read(getClass().getResource("/dev/darkenight07/img/avion_combate.png"));
@@ -24,7 +26,6 @@ public class Juego extends JPanel {
         TimerTask  timerTask = new TimerTask() {
             @Override
             public void run() {
-                repaint();
                 avion.mover();
 
                 try {
@@ -32,12 +33,14 @@ public class Juego extends JPanel {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                repaint();
             }
         };
         timer.schedule(timerTask, 0, 10);
     }
     @Override
     public void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g);
         g.drawImage(usuarioAvion, avion.getX(), avion.getY(), 80,90, this);
     }
 
