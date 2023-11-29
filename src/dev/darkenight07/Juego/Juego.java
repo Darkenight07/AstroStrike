@@ -2,6 +2,7 @@ package dev.darkenight07.Juego;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Timer;
@@ -26,7 +27,8 @@ public class Juego extends JPanel {
         TimerTask  timerTask = new TimerTask() {
             @Override
             public void run() {
-                avion.mover();
+                actualizar();
+                System.out.println("Bala 1: " + avion.getBalasX(1) + " " + avion.getBalasY(1) + " 2: " + avion.getBalasX(2) + " " + avion.getBalasY(2));
 
                 try {
                     Thread.sleep(10);
@@ -42,6 +44,16 @@ public class Juego extends JPanel {
     public void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g);
         g.drawImage(usuarioAvion, avion.getX(), avion.getY(), 80,90, this);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.blue);
+        g2d.fillRect(avion.getBalasX(1), avion.getBalasY(1), 5, 25);
+        g2d.fillRect(avion.getBalasX(2), avion.getBalasY(2), 5, 25);
     }
+    public void actualizar() {
+        avion.mover();
 
+        if (avion.disparando()) {
+            avion.disparoBalas();
+        }
+    }
 }
