@@ -23,23 +23,39 @@ public class Avion {
     public void mover() {
         if (keyBoardListener.estaSubiendo()) {
             y -= VELOCIDAD;
-            balaAvion1.y -= balaAvion1.VELOCIDAD;
-            balaAvion2.y -= balaAvion2.VELOCIDAD;
+            if (balaAvion1.haSidoDisparada && balaAvion2.haSidoDisparada) {
+
+            } else {
+                balaAvion1.y -= balaAvion1.VELOCIDAD;
+                balaAvion2.y -= balaAvion2.VELOCIDAD;
+            }
         }
         if (keyBoardListener.estaBajando()){
             y += VELOCIDAD;
-            balaAvion1.y += balaAvion1.VELOCIDAD;
-            balaAvion2.y += balaAvion2.VELOCIDAD;
+            if (balaAvion1.haSidoDisparada && balaAvion2.haSidoDisparada) {
+
+            } else {
+                balaAvion1.y += balaAvion1.VELOCIDAD;
+                balaAvion2.y += balaAvion2.VELOCIDAD;
+            }
         }
         if (keyBoardListener.estaIzquierda()) {
             x -= VELOCIDAD;
-            balaAvion1.x -= balaAvion1.VELOCIDAD;
-            balaAvion2.x -= balaAvion2.VELOCIDAD;
+            if (balaAvion1.haSidoDisparada && balaAvion2.haSidoDisparada) {
+
+            } else {
+                balaAvion1.x -= balaAvion1.VELOCIDAD;
+                balaAvion2.x -= balaAvion2.VELOCIDAD;
+            }
         }
         if (keyBoardListener.estaDerecha()) {
             x += VELOCIDAD;
-            balaAvion1.x += balaAvion1.VELOCIDAD;
-            balaAvion2.x += balaAvion2.VELOCIDAD;
+            if (balaAvion1.haSidoDisparada && balaAvion2.haSidoDisparada) {
+
+            } else {
+                balaAvion1.x += balaAvion1.VELOCIDAD;
+                balaAvion2.x += balaAvion2.VELOCIDAD;
+            }
         }
     }
 
@@ -96,8 +112,16 @@ public class Avion {
     }
 
     public void disparoBalas() {
-        balaAvion1.y -= balaAvion1.VELOCIDAD;
-        balaAvion2.y -= balaAvion2.VELOCIDAD;
+        if (balaAvion1.y < -10) {
+            balaAvion1.y = 440;
+            balaAvion2.y = 440;
+            balaAvion1.x = 340;
+            balaAvion2.x = 416;
+            balaAvion1.haSidoDisparada = false;
+        } else {
+            balaAvion1.y -= balaAvion1.VELOCIDAD;
+            balaAvion2.y -= balaAvion2.VELOCIDAD;
+        }
     }
 
     public void setX(int x) {

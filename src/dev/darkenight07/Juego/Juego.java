@@ -28,7 +28,7 @@ public class Juego extends JPanel {
             @Override
             public void run() {
                 actualizar();
-                System.out.println("Bala 1: " + avion.getBalasX(1) + " " + avion.getBalasY(1) + " 2: " + avion.getBalasX(2) + " " + avion.getBalasY(2));
+                System.out.println("Bala 1 Y: " + avion.getBalasY(1) + " Bala 2 Y: " + avion.getBalasY(2));
 
                 try {
                     Thread.sleep(10);
@@ -45,14 +45,16 @@ public class Juego extends JPanel {
         super.paintComponent(g);
         g.drawImage(usuarioAvion, avion.getX(), avion.getY(), 80,90, this);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.blue);
-        g2d.fillRect(avion.getBalasX(1), avion.getBalasY(1), 5, 25);
-        g2d.fillRect(avion.getBalasX(2), avion.getBalasY(2), 5, 25);
+        if (avion.disparando()) {
+            g2d.setColor(Color.blue);
+            g2d.fillRect(avion.getBalasX(1), avion.getBalasY(1), 5, 25);
+            g2d.fillRect(avion.getBalasX(2), avion.getBalasY(2), 5, 25);
+        }
     }
     public void actualizar() {
         avion.mover();
 
-        if (avion.disparando()) {
+        if (avion.disparando() && avion.balaAvion1.haSidoDisparada && avion.balaAvion2.haSidoDisparada) {
             avion.disparoBalas();
         }
     }
