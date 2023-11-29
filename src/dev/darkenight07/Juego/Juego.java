@@ -13,7 +13,6 @@ import dev.darkenight07.Avion.BalasAvion;
 public class Juego extends JPanel {
     private BufferedImage usuarioAvion;
     private Avion avion;
-    private int teclaPulsada = 0;
     private int dispararCooldown = 0;
     public static BalasAvion[] balasAvion = new BalasAvion[20];
 

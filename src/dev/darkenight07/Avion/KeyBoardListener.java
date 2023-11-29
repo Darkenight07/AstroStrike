@@ -21,7 +21,6 @@ public class KeyBoardListener implements java.awt.event.KeyListener {
         abajo = false;
         izquierda = false;
         derecha = false;
-
     }
 
     public boolean estaSubiendo() {
