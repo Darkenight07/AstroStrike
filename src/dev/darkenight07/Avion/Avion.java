@@ -1,5 +1,7 @@
 package dev.darkenight07.Avion;
 
+import dev.darkenight07.Juego.Juego;
+
 import java.awt.event.KeyListener;
 
 public class Avion {
@@ -16,8 +18,8 @@ public class Avion {
         this.y = y;
         this.VELOCIDAD = velocidad;
         keyBoardListener = new KeyBoardListener();
-        balaAvion1 = new BalasAvion(340, 440, 2);
-        balaAvion2 = new BalasAvion(416, 440, 2);
+        balaAvion1 = new BalasAvion(340, 440, 3);
+        balaAvion2 = new BalasAvion(416, 440, 3);
     }
 
     public void mover() {
@@ -61,13 +63,50 @@ public class Avion {
 
     public boolean disparando() {
         if (keyBoardListener.estaDisparando()) {
-            balaAvion1.haSidoDisparada = true;
-            balaAvion2.haSidoDisparada = true;
             return true;
         } else {
+            balaAvion1.haSidoDisparada = false;
+            balaAvion2.haSidoDisparada = false;
             return false;
         }
     }
+
+    public void disparoBalas() {
+
+        if (balaAvion1.y < -25) {
+            setBalasX(1, getX());
+            setBalasY(1, getY() + 40);
+
+            setBalasX(2, getX() + 76);
+            setBalasY(2, getY() + 40);
+            balaAvion1.vecesDisparada = 0;
+            balaAvion2.vecesDisparada = 0;
+        } else {
+            if (balaAvion1.vecesDisparada < 1 && balaAvion2.vecesDisparada < 1) {
+                balaAvion2.vecesDisparada = 1;
+                balaAvion1.vecesDisparada = 1;
+            }
+        }
+    }
+
+    public void dispararBalas(){
+        for(int balaIndex = 0; balaIndex < Juego.balasAvion.length; balaIndex++) {
+            if (Juego.balasAvion[balaIndex] == null) {
+                Juego.balasAvion[balaIndex] = new BalasAvion(getX(), getY(), 15);
+                Juego.balasAvion[balaIndex + 1] = new BalasAvion(getX() + 75, getY(), 15);
+                break;
+            }
+        }
+    }
+
+    public void movimientoBalas() {
+        for(BalasAvion bala : Juego.balasAvion) {
+            if(bala != null){
+                bala.y -= bala.VELOCIDAD;
+            }
+        }
+    }
+
 
     public int getX() {
         return x;
@@ -111,18 +150,7 @@ public class Avion {
         }
     }
 
-    public void disparoBalas() {
-        if (balaAvion1.y < -10) {
-            balaAvion1.y = 440;
-            balaAvion2.y = 440;
-            balaAvion1.x = 340;
-            balaAvion2.x = 416;
-            balaAvion1.haSidoDisparada = false;
-        } else {
-            balaAvion1.y -= balaAvion1.VELOCIDAD;
-            balaAvion2.y -= balaAvion2.VELOCIDAD;
-        }
-    }
+
 
     public void setX(int x) {
         this.x = x;
