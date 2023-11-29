@@ -8,10 +8,14 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import dev.darkenight07.Avion.Avion;
+import dev.darkenight07.Avion.BalasAvion;
 
 public class Juego extends JPanel {
     private BufferedImage usuarioAvion;
     private Avion avion;
+    private int teclaPulsada = 0;
+    private int dispararCooldown = 0;
+    public static BalasAvion[] balasAvion = new BalasAvion[20];
 
     public Juego(JFrame frame) {
         avion = new Avion(340, 400,2);
@@ -28,7 +32,6 @@ public class Juego extends JPanel {
             @Override
             public void run() {
                 actualizar();
-                System.out.println("Bala 1 Y: " + avion.getBalasY(1) + " Bala 2 Y: " + avion.getBalasY(2));
 
                 try {
                     Thread.sleep(10);
@@ -45,17 +48,43 @@ public class Juego extends JPanel {
         super.paintComponent(g);
         g.drawImage(usuarioAvion, avion.getX(), avion.getY(), 80,90, this);
         Graphics2D g2d = (Graphics2D) g;
-        if (avion.disparando()) {
-            g2d.setColor(Color.blue);
-            g2d.fillRect(avion.getBalasX(1), avion.getBalasY(1), 5, 25);
-            g2d.fillRect(avion.getBalasX(2), avion.getBalasY(2), 5, 25);
+
+        for(BalasAvion bala : balasAvion) {
+            if(bala != null){
+                g2d.setColor(Color.blue);
+                g2d.fillRect(bala.x, bala.y, 5, 25);
+            }
         }
     }
     public void actualizar() {
         avion.mover();
 
-        if (avion.disparando() && avion.balaAvion1.haSidoDisparada && avion.balaAvion2.haSidoDisparada) {
-            avion.disparoBalas();
+        if(avion.disparando() && puedeDisparar()) {
+            avion.dispararBalas();
+        }
+
+        eliminarBala();
+        dispararCooldown--;
+        avion.movimientoBalas();
+    }
+
+    public void eliminarBala() {
+        for (int balaIndex = 0; balaIndex < balasAvion.length; balaIndex++) {
+            if (balasAvion[balaIndex] != null) {
+                if (balasAvion[balaIndex].y < -25) {
+                    balasAvion[balaIndex] = null;
+                }
+            }
+        }
+    }
+
+    public boolean puedeDisparar() {
+        if(dispararCooldown > 0) {
+            dispararCooldown--;
+            return false;
+        } else {
+            dispararCooldown = 50;
+            return true;
         }
     }
 }
