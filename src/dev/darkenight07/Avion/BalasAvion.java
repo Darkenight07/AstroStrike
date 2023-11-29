@@ -3,6 +3,8 @@ package dev.darkenight07.Avion;
 public class BalasAvion {
 
     public boolean haSidoDisparada = false;
+    public int vecesDisparada = 0;
+    public int vecesPulsada = 0;
     public int x;
     public int y;
     public final int VELOCIDAD;
