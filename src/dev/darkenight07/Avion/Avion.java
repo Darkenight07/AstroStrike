@@ -52,7 +52,7 @@ public class Avion {
     public void movimientoBalas() {
         for(BalasAvion bala : Juego.balasAvion) {
             if(bala != null){
-                bala.y -= bala.VELOCIDAD;
+                bala.setY(bala.getY() - bala.VELOCIDAD);
             }
         }
     }
