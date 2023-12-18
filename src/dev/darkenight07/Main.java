@@ -13,7 +13,7 @@ public class Main {
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Juego juego = new Juego(frame);
+        Juego juego = new Juego();
         frame.add(juego, BorderLayout.CENTER);
         juego.requestFocusInWindow();
 
