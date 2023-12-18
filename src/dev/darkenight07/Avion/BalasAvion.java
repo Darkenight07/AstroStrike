@@ -2,11 +2,8 @@ package dev.darkenight07.Avion;
 
 public class BalasAvion {
 
-    public boolean haSidoDisparada = false;
-    public int vecesDisparada = 0;
-    public int vecesPulsada = 0;
-    public int x;
-    public int y;
+    private int x;
+    private int y;
     public final int VELOCIDAD;
 
     public BalasAvion(int x, int y, int velocidad) {
@@ -20,5 +17,9 @@ public class BalasAvion {
     }
     public int getX() {
         return x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
