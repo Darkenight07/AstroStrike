@@ -9,15 +9,21 @@ import java.util.Timer;
 import java.util.TimerTask;
 import dev.darkenight07.Avion.Avion;
 import dev.darkenight07.Avion.BalasAvion;
+import dev.darkenight07.Asteroide.Asteroide;
+import dev.darkenight07.Asteroide.LogicaAsteroide;
 
 public class Juego extends JPanel {
     private BufferedImage usuarioAvion;
     private Avion avion;
     private int dispararCooldown = 0;
     public static BalasAvion[] balasAvion = new BalasAvion[20];
+    public static Asteroide[] asteroides = new Asteroide[20];
+    private LogicaAsteroide logicaAsteroide = new LogicaAsteroide();
 
-    public Juego(JFrame frame) {
+
+    public Juego() {
         avion = new Avion(340, 400,2);
+
         setFocusable(true);
         addKeyListener(avion.getKeyBoardListener());
 
@@ -31,6 +37,10 @@ public class Juego extends JPanel {
             @Override
             public void run() {
                 actualizar();
+                logicaAsteroide.crearAsteroide();
+                logicaAsteroide.movimientoAsteroide();
+                logicaAsteroide.eliminarAsteroide();
+                logicaAsteroide.colisiones();
 
                 try {
                     Thread.sleep(10);
@@ -51,7 +61,14 @@ public class Juego extends JPanel {
         for(BalasAvion bala : balasAvion) {
             if(bala != null){
                 g2d.setColor(Color.blue);
-                g2d.fillRect(bala.x, bala.y, 5, 25);
+                g2d.fillRect(bala.getX(), bala.getY(), 5, 25);
+            }
+        }
+
+        for(Asteroide asteroide : asteroides) {
+            if(asteroide != null){
+                g2d.setColor(Color.gray);
+                g2d.fillRect(asteroide.getX(), asteroide.getY(), 25, 25);
             }
         }
     }
@@ -70,7 +87,7 @@ public class Juego extends JPanel {
     public void eliminarBala() {
         for (int balaIndex = 0; balaIndex < balasAvion.length; balaIndex++) {
             if (balasAvion[balaIndex] != null) {
-                if (balasAvion[balaIndex].y < -25) {
+                if (balasAvion[balaIndex].getY() < -25) {
                     balasAvion[balaIndex] = null;
                 }
             }
